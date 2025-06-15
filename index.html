@@ -1,0 +1,80 @@
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+export default function WhatsAppLinkGenerator() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [message, setMessage] = useState("");
+  const [link, setLink] = useState("");
+
+  const generateLink = () => {
+    if (!phoneNumber) return;
+    const encodedMessage = encodeURIComponent(message);
+    const generatedLink = `https://wa.me/${phoneNumber}${encodedMessage ? `?text=${encodedMessage}` : ""}`;
+    setLink(generatedLink);
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-r from-green-300 via-emerald-400 to-teal-500 text-gray-900">
+      <div className="bg-white p-10 rounded-3xl shadow-2xl max-w-xl w-full text-center border border-gray-200">
+        <h1 className="text-3xl font-extrabold mb-5 text-green-800">Gerador de Link do WhatsApp</h1>
+        <p className="text-base text-gray-700 mb-6">
+          Um gerador de link do WhatsApp cria um link direto para iniciar uma conversa no aplicativo, permitindo que seus clientes entrem em contato com você sem precisar adicionar seu número aos contatos.
+        </p>
+
+        <input
+          type="tel"
+          placeholder="Número com DDD e código do país (ex: 5587999999999)"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+
+        <textarea
+          placeholder="Mensagem padrão (opcional)"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+
+        <Button onClick={generateLink} className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold text-lg rounded-2xl shadow-md">
+          Gerar Link
+        </Button>
+
+        {link && (
+          <div className="mt-6 bg-green-50 border border-green-300 p-4 rounded-2xl">
+            <p className="font-semibold mb-2 text-green-800">Seu link:</p>
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="break-words text-green-700 underline"
+            >
+              {link}
+            </a>
+          </div>
+        )}
+      </div>
+
+      <div className="max-w-2xl mt-12 text-white text-base p-6 bg-green-900 rounded-3xl shadow-2xl border border-green-700">
+        <h2 className="text-xl font-bold mb-4">Como funciona:</h2>
+        <ol className="list-decimal pl-6 space-y-2">
+          <li>Acesse o gerador online.</li>
+          <li>Insira seu número com código do país e DDD, e uma mensagem opcional.</li>
+          <li>Copie o link gerado.</li>
+          <li>Compartilhe em redes sociais, sites ou e-mails.</li>
+          <li>Clientes iniciam a conversa com a mensagem personalizada.</li>
+        </ol>
+
+        <h2 className="text-xl font-bold mt-8 mb-4">Benefícios:</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>Facilidade:</strong> O cliente não precisa salvar seu número.</li>
+          <li><strong>Personalização:</strong> Mensagem personalizada para direcionar a conversa.</li>
+          <li><strong>Praticidade:</strong> Pode ser usado em várias plataformas.</li>
+          <li><strong>Aumento de vendas:</strong> Facilita o contato e o engajamento.</li>
+        </ul>
+      </div>
+
+      <footer className="mt-12 mb-4 text-sm text-white font-light">Criado por <span className="font-bold">MILATO12</span></footer>
+    </div>
+  );
+}
